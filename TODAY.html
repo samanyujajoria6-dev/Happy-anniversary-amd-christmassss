@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Christmas Gift 🎄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #0b132b, #1c2541, #3a506b);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.screen {
+  display: none;
+  max-width: 600px;
+  padding: 30px;
+  animation: fade 0.7s ease;
+}
+
+.screen.active {
+  display: block;
+}
+
+h1 { font-size: 2.2rem; }
+h2 { font-weight: normal; opacity: 0.9; }
+p { line-height: 1.6; white-space: pre-line; }
+
+button {
+  margin-top: 25px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  background: white
+  color: #203a43;
+}
+
+footer {
+  margin-top: 30px;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* FLIP CARDS */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.card {
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  cursor: pointer;
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  backface-visibility: hidden;
+}
+
+.card-front {
+  background: rgba(255,255,255,0.15);
+}
+
+.card-back {
+  background: rgba(255,255,255,0.25);
+  transform: rotateY(180deg);
+}
+
+@keyframes fade {
+  from {opacity:0; transform: translateY(10px);}
+  to {opacity:1; transform: translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" preload="auto">
+  <source src="music1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- LANDING -->
+<div class="screen active" id="landing">
+  <p>🎄 a little christmas thought…</p>
+  <h1>Hiiiii Bebo,</h1>
+  <h2>I wanted to do a tiny something this Christmas, because you mean a lot to me.</h2>
+  <p>Tap below, oki??</p>
+  <button onclick="start()">Open Your Gift</button>
+  <footer>Made with love & warm feelings 🎄🤍</footer>
+</div>
+
+<!-- LETTER -->
+<div class="screen" id="letter">
+  <h1>A Christmas Note 🎅💌</h1>
+  <h2>Wrapped straight from my heart</h2>
+  <p>
+Hey love,
+
+So its offically 1 year since we got together( ayayayayyayayaya), and  tbhh i hope it continues like this. 
+You seriously make me so happy.......... 
+and I love everything about you. your smile, your laugh, your sadna, hugs, kisses,
+ EVERYTHING.💋💋💋💋💋
+  </p>
+  <button onclick="go('cards')">Continue ❄️</button>
+</div>
+
+<!-- FLIP CARDS -->
+<div class="screen" id="cards">
+  <h1>Little Things I Want You To Know 🎄</h1>
+  <p>Tap to flip ❄️</p>
+
+  <div class="cards">
+    <div class="card" onclick="flip(this)">
+      <div class="card-inner">
+        <div class="card-face card-front">You my home 🤍</div>
+        <div class="card-face card-back">Being with you feels like comfort 🎄</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="flip(this)">
+      <div class="card-inner">
+        <div class="card-face card-front">You’re cute even when annoyed 😅</div>
+        <div class="card-face card-back">Still my favorite always</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="flip(this)">
+      <div class="card-inner">
+        <div class="card-face card-front">Unlimited hugs 🫂</div>
+        <div class="card-face card-back">Redeem anytime ❄️</div>
+      </div>
+    </div>
+
+    <div class="card" onclick="flip(this)">
+      <div class="card-inner">
+        <div class="card-face card-front">Remember our time together?</div>
+        <div class="card-face card-back">I wanna be like that Forever.</div>
+      </div>
+    </div>
+  </div>
+
+  <button onclick="go('end')">Next ✨</button>
+</div>
+
+<!-- FINAL -->
+<div class="screen" id="end">
+  <h1>One More Thing 💝</h1>
+  <p>
+Last Christmas, I choose you.
+Always & forever 🤍
+  </p>
+  <button onclick="restart()">Restart 🎄</button>
+</div>
+
+<script>
+const music = document.getElementById("bgMusic");
+
+function start() {
+  music.volume = 1;
+  music.muted = false;
+  music.play().catch(()=>{});
+  go('letter');
+}
+
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function flip(card) {
+  card.classList.toggle("flipped");
+}
+
+function restart() {
+  go('landing');
+}
+</script>
+
+</body>
+</html>
